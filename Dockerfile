@@ -26,13 +26,10 @@ LABEL org.apache.airflow.pgbouncer_exporter.version="${PGBOUNCER_EXPORTER_VERSIO
 LABEL org.apache.airflow.go.version="${GO_VERSION}"
 LABEL org.apache.airflow.airflow_pgbouncer_exporter.version="${AIRFLOW_PGBOUNCER_EXPORTER_VERSION}"
 LABEL org.apache.airflow.commit_sha="${COMMIT_SHA}"
+LABEL maintainer="Apache Airflow Community <dev@airflow.apache.org>"
 
-MAINTAINER "Apache Airflow Community <dev@airflow.apache.org>"
-
-RUN set -ex \
-    && echo http://dl-cdn.alpinelinux.org/alpine/v3.7/main > /etc/apk/repositories \
-    && echo http://dl-cdn.alpinelinux.org/alpine/v3.7/community >> /etc/apk/repositories \
-    && apk upgrade --no-cache libressl libressl-dev
+# hadolint ignore=DL3018
+RUN apk --no-cache add libressl libressl-dev
 
 COPY pgbouncer_exporter /bin
 

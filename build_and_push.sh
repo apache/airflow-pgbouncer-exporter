@@ -19,17 +19,17 @@ set -eu
 DOCKERHUB_USER=${DOCKERHUB_USER:="apache"}
 DOCKERHUB_REPO=${DOCKERHUB_REPO:="airflow"}
 PGBOUNCER_EXPORTER_VERSION="0.5.0"
-AIRFLOW_PGBOUNCER_EXPORTER_VERSION="2020.07.10"
-EXPECTED_GO_VERSION="1.14.4"
+AIRFLOW_PGBOUNCER_EXPORTER_VERSION="2020.09.05"
+EXPECTED_GO_VERSION="1.15.1"
 COMMIT_SHA=$(git rev-parse HEAD)
 
 cd "$( dirname "${BASH_SOURCE[0]}" )" || exit 1
 
-CURRENT_GO_VERSION=$("go${EXPECTED_GO_VERSION}" version 2>/dev/null | awk '{ print $3 }' 2>/dev/null)
+CURRENT_GO_VERSION=$("go${EXPECTED_GO_VERSION}" version 2>/dev/null | awk '{ print $3 }' 2>/dev/null || true)
 
 if [[ ${CURRENT_GO_VERSION} == "" ]]; then
   CURRENT_GO_VERSION=$(go version 2>/dev/null | awk '{ print $3 }' 2>/dev/null)
-  GO_BIN=$(command -v go 2>/dev/null)
+  GO_BIN=$(command -v go 2>/dev/null || true)
 else
   GO_BIN=$(command -v go${EXPECTED_GO_VERSION} 2>/dev/null)
 fi
@@ -60,7 +60,7 @@ fi
 
 # Needs to be set for alpine images to run net package of GO
 export CGO_ENABLED=0
-rm pgbouncer_exporter
+rm -f pgbouncer_exporter 2>/dev/null
 
 "${GO_BIN}" get ./...
 "${GO_BIN}" build
