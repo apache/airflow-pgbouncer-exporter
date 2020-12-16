@@ -29,7 +29,7 @@ LABEL org.apache.airflow.commit_sha="${COMMIT_SHA}"
 LABEL maintainer="Apache Airflow Community <dev@airflow.apache.org>"
 
 # hadolint ignore=DL3018
-RUN apk --no-cache add libressl libressl-dev
+RUN apk --no-cache add tzdata ca-certificates libressl libressl-dev
 
 COPY pgbouncer_exporter /bin
 
