@@ -12,7 +12,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-ARG ALPINE_VERSION="3.12"
+ARG ALPINE_VERSION="3.14"
 
 FROM alpine:${ALPINE_VERSION} AS builder
 
