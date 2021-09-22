@@ -160,7 +160,7 @@ func (s *SQLStore) GetLists(ctx context.Context) ([]domain.List, error) {
 // Check checks the health of the store.
 func (s *SQLStore) Check(ctx context.Context) error {
 	// we cant use db.Ping because it is making a ";" sql query which pgbouncer does not support
-	rows, err := s.db.QueryContext(ctx, "SHOW VERSION")
+	rows, err := s.db.QueryContext(ctx, "SHOW server_version")
 	if err != nil {
 		return err
 	}
